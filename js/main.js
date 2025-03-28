@@ -110,4 +110,76 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // 初始化导航栏效果
+    initNavbar();
+    
+    // 初始化果冻效果
+    initJellyEffect();
+    
+    // 检查并应用主题
+    checkTheme();
 });
+
+// 初始化导航栏
+function initNavbar() {
+    // 监听滚动来改变导航栏样式
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (header) {
+            if (window.scrollY > 50) {
+                header.classList.add('nav-scrolled');
+            } else {
+                header.classList.remove('nav-scrolled');
+            }
+        }
+    });
+}
+
+// 初始化果冻效果
+function initJellyEffect() {
+    const jellyElements = document.querySelectorAll('.jelly-effect');
+    
+    jellyElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            // 移除任何现有的果冻动画
+            this.classList.remove('animating');
+            
+            // 强制重新渲染
+            void this.offsetWidth;
+            
+            // 添加动画类
+            this.classList.add('animating');
+        });
+        
+        element.addEventListener('animationend', function() {
+            this.classList.remove('animating');
+        });
+    });
+}
+
+// 检查并应用主题
+function checkTheme() {
+    // 从localStorage获取用户数据
+    const userDataStr = localStorage.getItem('learnGenieCurrentUser');
+    if (!userDataStr) return;
+    
+    try {
+        const userData = JSON.parse(userDataStr);
+        
+        if (userData.settings && userData.settings.theme) {
+            applyTheme(userData.settings.theme);
+        }
+    } catch (e) {
+        console.error('解析用户数据失败:', e);
+    }
+}
+
+// 应用主题
+function applyTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark-theme');
+    } else {
+        document.documentElement.classList.remove('dark-theme');
+    }
+}

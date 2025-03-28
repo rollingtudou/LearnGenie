@@ -167,9 +167,9 @@
     </style>
 </head>
 <body>
-    <header class="header">
+    <header class="header glass-morph">
         <nav class="nav">
-            <div class="logo">LearnGenie</div>
+            <div class="logo jelly-effect">LearnGenie</div>
             <div class="nav-links">
                 <a href="./dashboard.html">主页</a>
                 <a href="./learning-plan.html">学习计划</a>
@@ -179,25 +179,37 @@
                 <a href="./settings.html">设置</a>
             </div>
             <div class="user-actions">
-                <a href="./settings.html" class="user-avatar">用户</a>
+                <!-- 由auth.js动态填充 -->
             </div>
         </nav>
     </header>
 
     <div class="content-generator">
-        <div class="generator-form">
-            <h2>AI内容生成</h2>
-            <form id="content-form">
-                <div class="form-group">
-                    <label for="topic">学习主题</label>
-                    <input type="text" id="topic" placeholder="请输入学习主题" required>
+        <div class="sidebar">
+            <div class="generator-form">
+                <h2>AI内容生成</h2>
+                <form id="content-form">
+                    <div class="form-group">
+                        <label for="topic">学习主题</label>
+                        <input type="text" id="topic" placeholder="请输入学习主题" required>
+                    </div>
+                    <button type="submit" class="btn primary-btn jelly-effect">生成内容</button>
+                </form>
+            </div>
+            
+            <div class="content-history">
+                <h3>历史记录</h3>
+                <div id="content-history">
+                    <p class="empty-history">暂无历史记录</p>
                 </div>
-                <button type="submit" class="btn primary-btn">生成内容</button>
-            </form>
+            </div>
         </div>
 
         <div class="content-preview">
-            <h2>预览</h2>
+            <div class="preview-header">
+                <h2>预览</h2>
+                <button id="save-content" class="btn secondary-btn jelly-effect" style="display: none;">保存内容</button>
+            </div>
             <div id="preview-content" class="preview-content">
                 <div class="placeholder">填写学习主题并点击"生成内容"按钮，AI将为您生成相关学习内容</div>
             </div>
@@ -205,6 +217,8 @@
     </div>
 
     <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/user-data.js"></script>
     <script src="../js/content-gen.js"></script>
 </body>
 </html>

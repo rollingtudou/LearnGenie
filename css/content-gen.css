@@ -13,6 +13,12 @@
     }
 }
 
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 .generator-form {
     background: var(--card-bg);
     padding: 2rem;
@@ -78,43 +84,186 @@
     padding: 1rem;
 }
 
-/* Markdown样式 */
-.preview-content h1, 
-.preview-content h2, 
-.preview-content h3 {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
+/* 添加历史记录样式 */
+.content-history {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 10px 25px var(--shadow-light);
+}
+
+.content-history h3 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-dark);
+}
+
+.empty-history {
+    color: #888;
+    text-align: center;
+    padding: 1rem;
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.history-item {
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    background: rgba(106, 90, 249, 0.05);
+    margin-bottom: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    background: rgba(106, 90, 249, 0.1);
+    transform: translateY(-2px);
+}
+
+.history-topic {
+    font-weight: 500;
     color: var(--primary-color);
+    margin-bottom: 0.3rem;
 }
 
-.preview-content ul, 
-.preview-content ol {
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.preview-content p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.preview-content blockquote {
-    border-left: 4px solid var(--primary-light);
-    padding-left: 1rem;
-    margin-left: 0;
+.history-date {
+    font-size: 0.8rem;
     color: #666;
 }
 
-.preview-content code {
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+#save-content {
+    padding: 0.5rem 1rem;
+}
+
+/* Markdown 渲染样式增强 */
+.markdown-rendered {
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.markdown-rendered h1 {
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-rendered h2 {
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgba(106, 90, 249, 0.2);
+    padding-bottom: 0.3rem;
+    margin-top: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.markdown-rendered h3 {
+    font-size: 1.3rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.7rem;
+}
+
+.markdown-rendered h4 {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.markdown-rendered ul, 
+.markdown-rendered ol {
+    padding-left: 1.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.markdown-rendered li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-rendered li p {
+    margin: 0;
+}
+
+.markdown-rendered blockquote {
+    border-left: 4px solid var(--primary-light);
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    background-color: rgba(106, 90, 249, 0.05);
+    border-radius: 0 4px 4px 0;
+    color: #555;
+}
+
+.markdown-rendered blockquote p {
+    margin: 0.5rem 0;
+}
+
+.markdown-rendered code {
     background: rgba(106, 90, 249, 0.1);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
     font-family: monospace;
+    font-size: 0.9em;
 }
 
-.preview-content pre {
+.markdown-rendered pre {
     background: #f8f9fa;
     padding: 1rem;
     border-radius: var(--border-radius-sm);
     overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.markdown-rendered pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    display: block;
+}
+
+.markdown-rendered table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.markdown-rendered table th,
+.markdown-rendered table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+}
+
+.markdown-rendered table th {
+    background-color: rgba(106, 90, 249, 0.05);
+    font-weight: bold;
+}
+
+.markdown-rendered table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+/* 专门处理 mermaid 图表的样式 */
+.mermaid {
+    margin: 1.5rem 0;
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .preview-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 } 

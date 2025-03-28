@@ -6,6 +6,8 @@
     <title>登录 - LearnGenie</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/auth.css">
     <style>
         .login-page {
             min-height: 100vh;
@@ -99,31 +101,40 @@
     </style>
 </head>
 <body>
-    <div class="login-page">
-        <div class="login-container">
-            <div class="login-header">
-                <h1 class="logo">LearnGenie</h1>
-                <p>欢迎回来</p>
+    <header class="header glass-morph">
+        <nav class="nav">
+            <div class="logo jelly-effect">
+                <a href="../index.html">LearnGenie</a>
             </div>
-            <form class="login-form">
+            <div class="nav-links">
+                <a href="../index.html">首页</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card glass-morph">
+            <h1>登录</h1>
+            <form id="login-form" class="auth-form">
                 <div class="form-group">
-                    <label for="username">用户名</label>
-                    <input type="text" id="username" placeholder="请输入用户名" required>
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" placeholder="请输入邮箱" required>
                 </div>
                 <div class="form-group">
                     <label for="password">密码</label>
                     <input type="password" id="password" placeholder="请输入密码" required>
                 </div>
-                <button type="submit" class="btn primary-btn login-btn">登录</button>
-                <button type="button" class="sso-btn">通过Canvas登录</button>
+                <div id="login-status" class="status-message" style="display: none;"></div>
+                <button type="submit" class="btn primary-btn jelly-effect">登录</button>
+                <div class="auth-links">
+                    <span>还没有账号？</span>
+                    <a href="./register.html">立即注册</a>
+                </div>
             </form>
-            <div class="register-link">
-                <span>没有账号？</span>
-                <a href="./register.html">立即注册</a>
-            </div>
         </div>
-    </div>
+    </main>
 
     <script src="../js/auth.js"></script>
+    <script src="../js/user-data.js"></script>
 </body>
 </html>
