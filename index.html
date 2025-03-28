@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnGenie</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <link rel="stylesheet" href="./css/sidebar.css">
+</head>
+<body>
+    <!-- 跟随光标点 -->
+    <div class="cursor-dot"></div>
+
+    <div class="sidebar glass-morph" id="sidebar">
+        <div class="sidebar-label">导航栏</div>
+        <div class="sidebar-content">
+            <a href="#home" class="jelly-effect btn-jelly">首页</a>
+            <a href="#features" class="jelly-effect btn-jelly">特色功能</a>
+            <a href="#partners" class="jelly-effect btn-jelly">合作伙伴</a>
+            <a href="#news" class="jelly-effect btn-jelly">产品资讯</a>
+            <a href="#contact" class="jelly-effect btn-jelly">联系我们</a>
+        </div>
+    </div>
+
+    <header class="header glass-morph" id="header">
+        <nav class="nav">
+            <div class="logo jelly-effect floating">LearnGenie</div>
+            <div class="nav-links">
+                <a href="./pages/dashboard.html" class="jelly-effect btn-jelly">主页</a>
+                <a href="./pages/learning-plan.html" class="jelly-effect btn-jelly">学习计划</a>
+                <a href="./pages/content-gen.html" class="jelly-effect btn-jelly">内容生成</a>
+                <a href="./pages/flipped-class.html" class="jelly-effect btn-jelly">翻转课堂</a>
+                <a href="./pages/progress.html" class="jelly-effect btn-jelly">进度追踪</a>
+                <a href="./pages/settings.html" class="jelly-effect btn-jelly">设置</a>
+            </div>
+            <div class="user-actions">
+                <a href="./pages/login.html" class="login-btn jelly-effect btn-jelly">登录</a>
+                <a href="./pages/register.html" class="register-btn jelly-effect btn-jelly pulse">注册</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main page-load">
+        <section class="hero parallax" id="home">
+            <h1 class="text-blur" style="animation-delay: 0.3s">欢迎使用LearnGenie，一个由多模型驱动的个性化学习平台</h1>
+            <p class="text-blur" style="animation-delay: 0.6s">为您打造智能、高效的学习体验</p>
+            <div class="cta-buttons" style="animation-delay: 0.9s">
+                <a href="./pages/login.html" class="btn primary-btn jelly-effect btn-jelly shadow-pulse">开始学习</a>
+                <a href="#features" class="btn secondary-btn jelly-effect btn-jelly">了解更多</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="fade-in">平台特色</h2>
+            <div class="feature-grid">
+                <div class="feature-card fade-in" style="animation-delay: 0.1s;">
+                    <h3>个性化学习计划</h3>
+                    <p>根据您的学习目标和风格，定制专属学习路径</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.2s;">
+                    <h3>智能内容生成</h3>
+                    <p>AI辅助生成学习材料，提升学习效率</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.3s;">
+                    <h3>翻转课堂支持</h3>
+                    <p>支持课前、课中、课后全流程学习</p>
+                </div>
+                <div class="feature-card fade-in" style="animation-delay: 0.4s;">
+                    <h3>进度追踪</h3>
+                    <p>实时监控学习进度，激励持续进步</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="partners" class="partners animated-gradient">
+            <h2 class="fade-in">合作伙伴</h2>
+            <div class="partners-grid">
+                <div class="partner-card glass-morph fade-in slide-in-left">
+                    <h3>高校合作</h3>
+                    <div class="partner-list">
+                        <div class="partner-item jelly-effect">西安邮电大学</div>
+                        <div class="partner-item jelly-effect">长安大学</div>
+                        <div class="partner-item jelly-effect">延安大学</div>
+                        <div class="partner-item jelly-effect">西安文理学院</div>
+                    </div>
+                </div>
+                <div class="partner-card glass-morph fade-in slide-in-right">
+                    <h3>企业合作</h3>
+                    <div class="partner-list">
+                        <div class="partner-item jelly-effect">三节课</div>
+                        <div class="partner-item jelly-effect">网易有道</div>
+                        <div class="partner-item jelly-effect">好未来</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="news">
+            <h2 class="fade-in">产品资讯</h2>
+            <div class="news-grid">
+                <div class="news-card fade-in shadow-pulse">
+                    <h3>最新动态</h3>
+                    <ul>
+                        <li class="wiggle">LearnGenie —— 2025年度最佳教育科技产品</li>
+                        <li class="wiggle">新功能发布：AI辅助课程规划系统上线</li>
+                        <li class="wiggle">LearnGenie在线用户数再创新高</li>
+                    </ul>
+                </div>
+                <div class="news-card fade-in shadow-pulse">
+                    <h3>即将推出</h3>
+                    <ul>
+                        <li class="wiggle">全新的学习数据分析dashboard</li>
+                        <li class="wiggle">多语言学习支持</li>
+                        <li class="wiggle">企业定制版本</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <h2 class="fade-in">联系我们</h2>
+            <div class="contact-info">
+                <div class="contact-item fade-in slide-in-left shadow-pulse">
+                    <h3>商务合作</h3>
+                    <p>邮箱：business@learngenie.com</p>
+                    <p>电话：400-888-8888</p>
+                </div>
+                <div class="contact-item fade-in slide-in-right shadow-pulse">
+                    <h3>技术支持</h3>
+                    <p>邮箱：support@learngenie.com</p>
+                    <p>在线客服：周一至周日 9:00-21:00</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer glass-morph">
+        <div class="footer-content">
+            <div class="copyright">© 2025 LearnGenie - 让学习更智能</div>
+            <div class="footer-links">
+                <a href="#" class="jelly-effect">帮助中心</a>
+                <a href="#" class="jelly-effect">联系我们</a>
+                <a href="#" class="jelly-effect">隐私政策</a>
+                <a href="#" class="jelly-effect">用户协议</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/auth.js"></script>
+    <script src="./js/sidebar.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 跟随光标点效果
+        const cursor = document.querySelector('.cursor-dot');
+        
+        document.addEventListener('mousemove', function(e) {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // 滚动观察器 - 淡入效果
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('nav-scrolled');
+            } else {
+                header.classList.remove('nav-scrolled');
+            }
+        });
+
+        // 磁性按钮效果
+        const buttons = document.querySelectorAll('.magnetic-btn');
+        
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                this.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0)';
+            });
+        });
+    });
+    </script>
+</body>
+</html>

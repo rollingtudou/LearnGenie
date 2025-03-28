@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能任务管理助手</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .card {
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .task-container {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .ai-response {
+            background-color: #f0f7ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        .loading {
+            display: none;
+            margin-top: 10px;
+        }
+        .app-title {
+            color: #3a5a78;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center app-title">智能任务管理助手</h1>
+        
+        <div class="row">
+            <!-- 任务管理部分 -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">添加新任务</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="task-form">
+                            <div class="mb-3">
+                                <label for="task-name" class="form-label">任务名称</label>
+                                <input type="text" class="form-control" id="task-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="task-deadline" class="form-label">截止日期</label>
+                                <input type="date" class="form-control" id="task-deadline" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">添加任务</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">任务列表</h4>
+                    </div>
+                    <div class="card-body task-container">
+                        <div id="task-list" class="row"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI 助手部分 -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">AI 任务助手</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="ai-form">
+                            <div class="mb-3">
+                                <label for="ai-query" class="form-label">您的问题或请求</label>
+                                <textarea class="form-control" id="ai-query" rows="3" required placeholder="例如：帮我安排今天的任务优先级"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-info text-white">获取 AI 建议</button>
+                            <div class="loading" id="loading">
+                                <div class="spinner-border text-info" role="status">
+                                    <span class="visually-hidden">加载中...</span>
+                                </div>
+                                <span class="ms-2">正在思考中...</span>
+                            </div>
+                        </form>
+                        
+                        <div id="ai-response" class="ai-response mt-3" style="display: none;">
+                            <h5>AI 回复：</h5>
+                            <div id="ai-content"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-header bg-warning">
+                        <h4 class="mb-0">使用提示</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>添加任务时，请填写任务名称和截止日期</li>
+                            <li>您可以随时删除已完成的任务</li>
+                            <li>使用AI助手获取任务管理建议和帮助</li>
+                            <li>所有数据均保存在本地，刷新页面不会丢失</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 任务卡片模板 -->
+    <template id="task-template">
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title task-name"></h5>
+                    <p class="card-text">截止日期: <span class="task-deadline"></span></p>
+                    <button class="btn btn-danger btn-sm delete-btn">删除任务</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', () => {
+            // 获取DOM元素
+            const taskForm = document.getElementById('task-form');
+            const taskNameInput = document.getElementById('task-name');
+            const taskDeadlineInput = document.getElementById('task-deadline');
+            const taskList = document.getElementById('task-list');
+            const aiForm = document.getElementById('ai-form');
+            const aiQuery = document.getElementById('ai-query');
+            const aiResponse = document.getElementById('ai-response');
+            const aiContent = document.getElementById('ai-content');
+            const loading = document.getElementById('loading');
+            const taskTemplate = document.getElementById('task-template');
+
+            // 初始化任务数组
+            let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+            // 显示所有任务
+            function renderTasks() {
+                // 清空任务列表
+                taskList.innerHTML = '';
+                
+                // 如果没有任务，显示提示信息
+                if (tasks.length === 0) {
+                    taskList.innerHTML = '<div class="col-12"><p class="text-muted">暂无任务，请添加新任务</p></div>';
+                    return;
+                }
+                
+                // 渲染所有任务
+                tasks.forEach((task, index) => {
+                    // 克隆任务模板
+                    const taskNode = document.importNode(taskTemplate.content, true);
+                    
+                    // 填充任务信息
+                    taskNode.querySelector('.task-name').textContent = task.name;
+                    taskNode.querySelector('.task-deadline').textContent = formatDate(task.deadline);
+                    
+                    // 设置删除按钮的事件
+                    const deleteBtn = taskNode.querySelector('.delete-btn');
+                    deleteBtn.addEventListener('click', () => {
+                        deleteTask(index);
+                    });
+                    
+                    // 添加到任务列表
+                    taskList.appendChild(taskNode);
+                });
+            }
+
+            // 添加新任务
+            function addTask(name, deadline) {
+                // 创建新任务对象
+                const newTask = {
+                    name: name,
+                    deadline: deadline,
+                    createdAt: new Date().toISOString()
+                };
+                
+                // 添加到任务数组
+                tasks.push(newTask);
+                
+                // 保存到本地存储
+                saveTasksToLocalStorage();
+                
+                // 重新渲染任务列表
+                renderTasks();
+            }
+
+            // 删除任务
+            function deleteTask(index) {
+                // 确认删除
+                if (confirm('确定要删除这个任务吗？')) {
+                    // 从数组中移除
+                    tasks.splice(index, 1);
+                    
+                    // 保存到本地存储
+                    saveTasksToLocalStorage();
+                    
+                    // 重新渲染任务列表
+                    renderTasks();
+                }
+            }
+
+            // 保存任务到localStorage
+            function saveTasksToLocalStorage() {
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+
+            // 格式化日期显示
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('zh-CN');
+            }
+
+            // 调用AI API获取回复
+            async function getAIResponse(query) {
+                try {
+                    // 显示加载状态
+                    loading.style.display = 'flex';
+                    
+                    // 准备请求数据 - 使用DeepSeek API格式
+                    const apiKey = 'sk-d64554689c524b7c9f8370210804a68e';
+                    const data = {
+                        model: "deepseek-chat",
+                        messages: [
+                            {"role": "system", "content": "你是一个智能任务管理助手，可以帮助用户规划和管理任务。"},
+                            {"role": "user", "content": query}
+                        ],
+                        stream: false
+                    };
+                    
+                    // 发送API请求
+                    const response = await fetch('https://api.deepseek.com/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${apiKey}`
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    // 处理响应
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        console.error('API错误:', errorText);
+                        throw new Error(`API请求失败: ${response.status}`);
+                    }
+                    
+                    // 解析JSON响应
+                    const result = await response.json();
+                    
+                    // 返回AI回复 - 根据DeepSeek API的响应格式提取内容
+                    if (result.choices && result.choices.length > 0 && result.choices[0].message) {
+                        return result.choices[0].message.content;
+                    } else {
+                        console.warn('未能识别的API响应格式:', result);
+                        return '收到了回复，但格式无法解析。';
+                    }
+                } catch (error) {
+                    console.error('获取AI回复时出错:', error);
+                    return `抱歉，获取AI回复时出错：${error.message}`;
+                } finally {
+                    // 隐藏加载状态
+                    loading.style.display = 'none';
+                }
+            }
+
+            // 表单提交处理 - 添加任务
+            taskForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                // 获取输入值
+                const name = taskNameInput.value.trim();
+                const deadline = taskDeadlineInput.value;
+                
+                // 验证输入
+                if (!name || !deadline) {
+                    alert('请填写完整的任务信息');
+                    return;
+                }
+                
+                // 添加任务
+                addTask(name, deadline);
+                
+                // 重置表单
+                taskForm.reset();
+            });
+
+            // 表单提交处理 - AI查询
+            aiForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // 获取查询内容
+                const query = aiQuery.value.trim();
+                
+                // 验证输入
+                if (!query) {
+                    alert('请输入问题或请求');
+                    return;
+                }
+                
+                // 显示加载状态，隐藏之前的回复
+                aiResponse.style.display = 'none';
+                
+                // 获取AI回复
+                const response = await getAIResponse(query);
+                
+                // 显示AI回复
+                aiContent.textContent = response;
+                aiResponse.style.display = 'block';
+            });
+
+            // 初始化页面时显示任务
+            renderTasks();
+        });
+    </script>
+</body>
+</html>

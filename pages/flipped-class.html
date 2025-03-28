@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>翻转课堂 - AI学习平台</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .flipped-class {
+            max-width: 1000px;
+            margin: 70px auto 0;
+            padding: 2rem;
+        }
+
+        .phase-nav {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 1rem;
+        }
+
+        .phase-nav button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            color: var(--gray);
+            font-size: 1rem;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .phase-nav button::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .phase-nav button.active {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .phase-nav button.active::after {
+            transform: scaleX(1);
+        }
+
+        .content-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .phase-content {
+            display: none;
+        }
+
+        .phase-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .material-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .material-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .material-card p {
+            margin-bottom: 1rem;
+        }
+
+        .material-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .discussion-list {
+            margin-top: 2rem;
+        }
+
+        .discussion-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .discussion-item:last-child {
+            border-bottom: none;
+        }
+
+        .discussion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .discussion-meta {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">AI学习</div>
+            <div class="nav-links">
+                <a href="./dashboard.html">主页</a>
+                <a href="./learning-plan.html">学习计划</a>
+                <a href="./content-gen.html">内容生成</a>
+                <a href="./flipped-class.html" class="active">翻转课堂</a>
+                <a href="./progress.html">进度追踪</a>
+                <a href="./settings.html">设置</a>
+            </div>
+            <div class="user-actions">
+                <a href="./settings.html" class="user-avatar">张三</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="flipped-class">
+        <nav class="phase-nav">
+            <button class="active" data-phase="before">课前准备</button>
+            <button data-phase="during">课堂活动</button>
+            <button data-phase="after">课后复习</button>
+        </nav>
+
+        <div class="content-section">
+            <div class="phase-content active" id="before-content">
+                <h2>课前准备材料</h2>
+                <div class="material-card">
+                    <h3>排序算法基础概念</h3>
+                    <p>本节课我们将学习几种基本的排序算法，包括冒泡排序、快速排序等。</p>
+                    <div class="material-actions">
+                        <button class="btn primary-btn">观看视频</button>
+                        <button class="btn secondary-btn">下载讲义</button>
+                    </div>
+                </div>
+                <div class="material-card">
+                    <h3>预习问题</h3>
+                    <p>1. 什么是算法的时间复杂度？</p>
+                    <p>2. 为什么我们需要不同的排序算法？</p>
+                </div>
+            </div>
+
+            <div class="phase-content" id="during-content">
+                <h2>课堂互动讨论</h2>
+                <div class="discussion-list">
+                    <div class="discussion-item">
+                        <div class="discussion-header">
+                            <h3>快速排序的优化方案</h3>
+                            <span class="discussion-meta">3个回复</span>
+                        </div>
+                        <p>如何优化快速排序的pivot选择策略？</p>
+                    </div>
+                    <div class="discussion-item">
+                        <div class="discussion-header">
+                            <h3>排序算法的应用场景</h3>
+                            <span class="discussion-meta">5个回复</span>
+                        </div>
+                        <p>在实际项目中，如何选择合适的排序算法？</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase-content" id="after-content">
+                <h2>课后练习</h2>
+                <div class="material-card">
+                    <h3>编程作业</h3>
+                    <p>实现一个快速排序算法，并分析其时间复杂度。</p>
+                    <div class="material-actions">
+                        <button class="btn primary-btn">提交作业</button>
+                        <button class="btn secondary-btn">查看示例</button>
+                    </div>
+                </div>
+                <div class="material-card">
+                    <h3>知识点总结</h3>
+                    <p>复习本节课程的关键概念和重点内容。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // 切换课程阶段的脚本
+        document.querySelectorAll('.phase-nav button').forEach(button => {
+            button.addEventListener('click', function() {
+                // 移除所有active类
+                document.querySelectorAll('.phase-nav button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.phase-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // 添加active类到当前按钮和对应内容
+                this.classList.add('active');
+                const phase = this.getAttribute('data-phase');
+                document.getElementById(`${phase}-content`).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

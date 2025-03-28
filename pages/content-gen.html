@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内容生成 - LearnGenie</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/content-gen.css">
+    <!-- 添加marked.js库用于渲染markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .content-gen {
+            max-width: 1000px;
+            margin: 70px auto 0;
+            padding: 2rem;
+        }
+
+        .input-section,
+        .preview-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .preview-content {
+            min-height: 300px;
+            padding: 1.5rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark);
+            background: #f9f9f9;
+        }
+
+        .preview-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .preview-content ul,
+        .preview-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .preview-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .thinking-animation {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .thinking-animation.active {
+            display: flex;
+        }
+
+        .thinking-dot {
+            width: 12px;
+            height: 12px;
+            margin: 0 4px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            animation: thinking 1.4s infinite ease-in-out;
+        }
+
+        .thinking-dot:nth-child(1) { animation-delay: -0.32s; }
+        .thinking-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes thinking {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .download-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .download-btn {
+            position: relative;
+            padding-right: 2.5rem;
+        }
+
+        .download-btn::after {
+            content: '▼';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .download-btn:hover::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .download-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 100;
+        }
+
+        .download-btn:hover .download-menu {
+            display: block;
+        }
+
+        .download-menu a {
+            display: block;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: var(--dark);
+            transition: background-color 0.3s;
+        }
+
+        .download-menu a:hover {
+            background-color: var(--light-gray);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">LearnGenie</div>
+            <div class="nav-links">
+                <a href="./dashboard.html">主页</a>
+                <a href="./learning-plan.html">学习计划</a>
+                <a href="./content-gen.html" class="active">内容生成</a>
+                <a href="./flipped-class.html">翻转课堂</a>
+                <a href="./progress.html">进度追踪</a>
+                <a href="./settings.html">设置</a>
+            </div>
+            <div class="user-actions">
+                <a href="./settings.html" class="user-avatar">用户</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-generator">
+        <div class="generator-form">
+            <h2>AI内容生成</h2>
+            <form id="content-form">
+                <div class="form-group">
+                    <label for="topic">学习主题</label>
+                    <input type="text" id="topic" placeholder="请输入学习主题" required>
+                </div>
+                <button type="submit" class="btn primary-btn">生成内容</button>
+            </form>
+        </div>
+
+        <div class="content-preview">
+            <h2>预览</h2>
+            <div id="preview-content" class="preview-content">
+                <div class="placeholder">填写学习主题并点击"生成内容"按钮，AI将为您生成相关学习内容</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/content-gen.js"></script>
+</body>
+</html>

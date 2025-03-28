@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学习计划 - LearnGenie</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <style>
+        .learning-plan {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 70px auto 0;
+        }
+
+        @media screen and (max-width: 1200px) {
+            .learning-plan {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .plan-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .timeline-view {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-toggle button {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary-color);
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-toggle button.active {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .timeline {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem 0;
+            gap: 1.5rem;
+        }
+
+        .timeline.week-view {
+            flex-direction: row;
+        }
+
+        .timeline.month-view {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .timeline-item {
+            min-width: 200px;
+            background: var(--light-gray);
+            padding: 1rem;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .timeline.week-view .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: -1.5rem;
+            width: 1.5rem;
+            height: 2px;
+            background: var(--gray);
+        }
+
+        .timeline.month-view .timeline-item {
+            min-width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .timeline.month-view .timeline-item::before {
+            display: none;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-item h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .timeline-item .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--gray);
+            border-radius: 2px;
+            margin-top: 1rem;
+        }
+
+        .timeline-item .progress-bar .progress {
+            width: 60%;
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">LearnGenie</div>
+            <div class="nav-links">
+                <a href="./dashboard.html">主页</a>
+                <a href="./learning-plan.html" class="active">学习计划</a>
+                <a href="./content-gen.html">内容生成</a>
+                <a href="./flipped-class.html">翻转课堂</a>
+                <a href="./progress.html">进度追踪</a>
+                <a href="./settings.html">设置</a>
+            </div>
+            <div class="user-actions">
+                <a href="./settings.html" class="user-avatar">张三</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="learning-plan">
+        <div class="plan-form">
+            <h2>创建学习计划</h2>
+            <form>
+                <div class="form-group">
+                    <label for="subject">学科</label>
+                    <select id="subject" required>
+                        <option value="">请选择学科</option>
+                        <option value="math">数学</option>
+                        <option value="computer">计算机</option>
+                        <option value="physics">物理</option>
+                        <option value="chemistry">化学</option>
+                        <option value="biology">生物</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="goal">学习目标</label>
+                    <textarea id="goal" rows="4" placeholder="请输入您的学习目标" required></textarea>
+                </div>
+                <button type="submit" class="btn primary-btn">生成计划</button>
+            </form>
+            <div id="learning-plan-content" class="plan-content"></div>
+        </div>
+
+        <div class="timeline-view">
+            <div class="timeline-header">
+                <h2>学习时间线</h2>
+                <div class="view-toggle">
+                    <button class="week-btn active" onclick="switchView('week')">周视图</button>
+                    <button class="month-btn" onclick="switchView('month')">月视图</button>
+                </div>
+            </div>
+            <div class="timeline week-view">
+                <div class="timeline-item">
+                    <h4>第1周：排序算法</h4>
+                    <p>学习冒泡排序和快速排序</p>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+                <!-- 其他时间线项目 -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/learning-plan.js"></script>
+</body>
+</html>

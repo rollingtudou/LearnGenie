@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置 - AI学习平台</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .settings {
+            max-width: 800px;
+            margin: 70px auto 0;
+            padding: 2rem;
+        }
+
+        .settings-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .save-btn {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .save-btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">AI学习</div>
+            <div class="nav-links">
+                <a href="./dashboard.html">主页</a>
+                <a href="./learning-plan.html">学习计划</a>
+                <a href="./content-gen.html">内容生成</a>
+                <a href="./flipped-class.html">翻转课堂</a>
+                <a href="./progress.html">进度追踪</a>
+                <a href="./settings.html" class="active">设置</a>
+            </div>
+            <div class="user-actions">
+                <a href="./settings.html" class="user-avatar">张三</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="settings">
+        <div class="settings-container">
+            <div class="settings-section">
+                <h2>个人信息</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" value="张三">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">邮箱</label>
+                        <input type="email" id="email" value="zhangsan@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">头像</label>
+                        <input type="file" id="avatar" accept="image/*">
+                    </div>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                <h2>学习偏好</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="difficulty">默认难度级别</label>
+                        <select id="difficulty">
+                            <option value="beginner">初级</option>
+                            <option value="intermediate" selected>中级</option>
+                            <option value="advanced">高级</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="daily-goal">每日学习目标（小时）</label>
+                        <input type="number" id="daily-goal" value="2" min="0.5" max="12" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="notification">学习提醒</label>
+                        <select id="notification">
+                            <option value="none">关闭</option>
+                            <option value="daily" selected>每日</option>
+                            <option value="weekly">每周</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+
+            <button class="save-btn">保存设置</button>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

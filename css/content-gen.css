@@ -1,0 +1,120 @@
+.content-generator {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 70px auto 0;
+}
+
+@media screen and (max-width: 1200px) {
+    .content-generator {
+        grid-template-columns: 1fr;
+    }
+}
+
+.generator-form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 10px 25px var(--shadow-light);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.content-preview {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 10px 25px var(--shadow-light);
+}
+
+.preview-content {
+    margin-top: 1rem;
+    min-height: 300px;
+}
+
+.preview-content .placeholder {
+    color: #888;
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.preview-content .loading {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.preview-content .error {
+    color: #dc3545;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Markdown样式 */
+.preview-content h1, 
+.preview-content h2, 
+.preview-content h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.preview-content ul, 
+.preview-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.preview-content p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.preview-content blockquote {
+    border-left: 4px solid var(--primary-light);
+    padding-left: 1rem;
+    margin-left: 0;
+    color: #666;
+}
+
+.preview-content code {
+    background: rgba(106, 90, 249, 0.1);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+.preview-content pre {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto;
+} 
